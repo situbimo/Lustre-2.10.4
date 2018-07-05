@@ -1,5 +1,5 @@
 # Lustre-2.10.4
-lustre是一个分布式文件系统，lustre2.10.4兼容多版本操作系统(ubuntu16、CentOS6、CentOS7)
+lustre是一个分布式文件系统，lustre2.10.4兼容多版本操作系统(ubuntu16、CentOS6、CentOS7),以下是学习心得，如有不对之处，请指正，后续会陆续增加自己的学习心得！
 
 系统环境
 
@@ -140,6 +140,9 @@ lustre-client-modules-4.4.0-116-generic_2.10.4-1_amd64.deb \
 lustre-dev_2.10.4-1_amd64.deb
 #挂载
 mount -t lustre node03:/lustre /mnt/
+
+#
+
 附件
 http://wiki.lustre.org/Installing_the_Lustre_Software
 http://wiki.lustre.org/Lustre_with_ZFS_Install
