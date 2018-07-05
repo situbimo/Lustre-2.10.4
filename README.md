@@ -104,9 +104,13 @@ libzfs2-devel-0.7.9-1.el7.x86_64.rpm -y
 #将lustre模块导入内核
 
 modprobe zfs
+
 modprobe lustre		
+
 modprobe lnet
+
 modprobe ldiskfs	
+
 
 #查看导入是否成功
 
@@ -117,15 +121,22 @@ lsmod
 ##分区
 
 parted -s /dev/sdb "mkpart primary 0% 20%"
+
 parted -s /dev/sdb "mkpart primary 20% 40%"
+
 parted -s /dev/sdb "mkpart primary 40% 60%"
+
 parted -s /dev/sdb "mkpart primary 60% 80%"
+
 parted -s /dev/sdb "mkpart primary 80% 100%"
+
 
 ##格式化
 
 mkfs.xfs /dev/sdb1 -f
+
 mkfs.xfs /dev/sdb2 -f
+
 mkfs.xfs /dev/sdb3 -f
 
 #lustre配置
@@ -152,7 +163,9 @@ options lnet networks="tcp0(ens33)"
 #/etc/ldev.conf
 
 node03 - mgs     zfs:lustre-mgs/mgs
+
 node03 - mdt0    zfs:lustre-mdt0/mdt0
+
 node03 - ost0    zfs:lustre-ost0/ost0
 
 #启动lustre服务
@@ -173,9 +186,7 @@ mount -t lustre node03:/lustre /mnt/
 
 #Ubuntu
 
-dpkg -i \
-lustre-client-modules-4.4.0-116-generic_2.10.4-1_amd64.deb \
-lustre-dev_2.10.4-1_amd64.deb
+dpkg -i lustre-client-modules-4.4.0-116-generic_2.10.4-1_amd64.deb lustre-dev_2.10.4-1_amd64.deb
 
 #挂载
 
