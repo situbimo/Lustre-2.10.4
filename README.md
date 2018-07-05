@@ -1,16 +1,13 @@
 # Lustre-2.10.4
-lustre是一个分布式文件系统，在2.10.0以前仅仅支持红帽和CentOS操作系统，lustre2.10.4兼容多版本操作系统
+lustre是一个分布式文件系统，lustre2.10.4兼容多版本操作系统(ubuntu16、CentOS6、CentOS7)
 
 系统环境
 
-系统	角色	IP地址&hostname	硬件配置
 CentOS Linux release 7.3.1611	存储服务端，客户端	192.168.179.140 node03	内存8GB，4核，50+20GB存储
+
 Ubuntu 16.04.3	客户端	192.168.179.141 node01	内存4GB，4核，20GB存储
+
 CentOS Linux release 7.3.1611	客户端	192.168.179.134 node02	内存8GB，4核，50+20GB存储
-Lustre 2.10.4	X	X	X
-
-
-
 
 下载地址：https://downloads.whamcloud.com/public/
 
@@ -21,7 +18,6 @@ Lustre 2.10.4	X	X	X
 3.关闭防火墙、selinux
 
 安装部署
-
 OpenZFS、DKMS
 安装lustre服务端
 yum install \
@@ -129,30 +125,18 @@ node03 - ost0    zfs:lustre-ost0/ost0
 service lustre start
 #挂载
 mount -t lustre node03:/lustre /mnt/
-
-
-
-
 客户端lustre安装
 #CentOS7同服务端一样的安装
 #挂载
 mount -t lustre node03:/lustre /mnt/
-
 #Ubuntu
 dpkg -i \
 lustre-client-modules-4.4.0-116-generic_2.10.4-1_amd64.deb \
 lustre-dev_2.10.4-1_amd64.deb
 #挂载
 mount -t lustre node03:/lustre /mnt/
-
-
-
-
 监控
-
 管理
-
-
 附件
 http://wiki.lustre.org/Installing_the_Lustre_Software
 http://wiki.lustre.org/Lustre_with_ZFS_Install
