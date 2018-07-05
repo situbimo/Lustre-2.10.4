@@ -12,13 +12,18 @@ CentOS Linux release 7.3.1611	客户端	192.168.179.134 node02	内存8GB，4核�
 下载地址：https://downloads.whamcloud.com/public/
 
 1.时间同步
+
 (1)ntpd,过程简单，略
+
 2.无密访问配置
+
 (1)ssh-keygen,过程简单，略
+
 3.关闭防火墙、selinux
 
-安装部署
-OpenZFS、DKMS
+
+4.安装部署
+
 安装lustre服务端
 yum install \
 asciidoc audit-libs-devel automake bc \
@@ -135,8 +140,6 @@ lustre-client-modules-4.4.0-116-generic_2.10.4-1_amd64.deb \
 lustre-dev_2.10.4-1_amd64.deb
 #挂载
 mount -t lustre node03:/lustre /mnt/
-监控
-管理
 附件
 http://wiki.lustre.org/Installing_the_Lustre_Software
 http://wiki.lustre.org/Lustre_with_ZFS_Install
