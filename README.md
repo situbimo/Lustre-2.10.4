@@ -25,6 +25,7 @@ CentOS Linux release 7.3.1611	客户端	192.168.179.134 node02	内存8GB，4核�
 4.安装部署
 
 安装lustre服务端
+
 yum install \
 asciidoc audit-libs-devel automake bc \
 binutils-devel bison device-mapper-devel elfutils-devel \
@@ -37,7 +38,9 @@ parted patchutils pciutils-devel perl-ExtUtils-Embed \
 pesign python-devel redhat-rpm-config rpm-build systemd-devel \
 tcl tcl-devel tk tk-devel wget xmlto yum-utils zlib-devel
 
+
 #1.安装lustre依赖的系统内核
+
 yum install \
 kernel-3.10.0-862.2.3.el7_lustre.x86_64.rpm \
 kernel-devel-3.10.0-862.2.3.el7_lustre.x86_64.rpm \
@@ -51,10 +54,14 @@ kernel-tools-libs-3.10.0-862.2.3.el7_lustre.x86_64.rpm \
 kernel-tools-libs-devel-3.10.0-862.2.3.el7_lustre.x86_64.rpm \
 kernel-tools-debuginfo-3.10.0-862.2.3.el7_lustre.x86_64.rpm \
 kernel-debuginfo-common-x86_64-3.10.0-862.2.3.el7_lustre.x86_64.rpm 
+
 #重启机器
+
 shutdown -r now
 
+
 #2.安装e2fsprogs	
+
 yum install e2fsprogs-1.42.13.wc6-7.el7.x86_64.rpm \
 e2fsprogs-debuginfo-1.42.13.wc6-7.el7.x86_64.rpm \
 e2fsprogs-devel-1.42.13.wc6-7.el7.x86_64.rpm \
@@ -93,52 +100,85 @@ libzpool2-0.7.9-1.el7.x86_64.rpm \
 libuutil1-0.7.9-1.el7.x86_64.rpm \
 libnvpair1-0.7.9-1.el7.x86_64.rpm \
 libzfs2-devel-0.7.9-1.el7.x86_64.rpm -y
+
 #将lustre模块导入内核
+
 modprobe zfs
 modprobe lustre		
 modprobe lnet
 modprobe ldiskfs	
+
 #查看导入是否成功
+
 lsmod 
+
 #硬盘分区以及格式化
+
 ##分区
+
 parted -s /dev/sdb "mkpart primary 0% 20%"
 parted -s /dev/sdb "mkpart primary 20% 40%"
 parted -s /dev/sdb "mkpart primary 40% 60%"
 parted -s /dev/sdb "mkpart primary 60% 80%"
 parted -s /dev/sdb "mkpart primary 80% 100%"
+
 ##格式化
+
 mkfs.xfs /dev/sdb1 -f
 mkfs.xfs /dev/sdb2 -f
 mkfs.xfs /dev/sdb3 -f
+
 #lustre配置
+
 ##MDS
+
 mkfs.lustre --reformat --mgs --backfstype=zfs --fsname=lustre --device-size=1048576 lustre-mgs/mgs /dev/sdb1
+
 ##MDT
+
 mkfs.lustre --reformat --mdt --backfstype=zfs --fsname=lustre --index=0 --mgsnode=node03@tcp --device-size=1048576 lustre-mdt0/mdt0 /dev/sdb2
+
 ##OST
+
 mkfs.lustre --reformat --ost --backfstype=zfs --fsname=lustre --index=0 --mgsnode=node03@tcp --device-size=1048576 lustre-ost0/ost0 /dev/sdb3
+
 ##配置lnet
+
 #/etc/modprobe.d/lustre.conf 
 options lnet networks="tcp0(ens33)"
+
 ##配置ldev
+
 #/etc/ldev.conf
+
 node03 - mgs     zfs:lustre-mgs/mgs
 node03 - mdt0    zfs:lustre-mdt0/mdt0
 node03 - ost0    zfs:lustre-ost0/ost0
+
 #启动lustre服务
+
 service lustre start
+
 #挂载
+
 mount -t lustre node03:/lustre /mnt/
+
 客户端lustre安装
+
 #CentOS7同服务端一样的安装
+
 #挂载
+
 mount -t lustre node03:/lustre /mnt/
+
 #Ubuntu
+
 dpkg -i \
 lustre-client-modules-4.4.0-116-generic_2.10.4-1_amd64.deb \
 lustre-dev_2.10.4-1_amd64.deb
+
 #挂载
+
 mount -t lustre node03:/lustre /mnt/
 
 #
